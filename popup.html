@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Page Capture</title>
+  <style>
+    body {
+      width: 300px;
+      padding: 15px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+    }
+    
+    h3 {
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    
+    .version {
+      font-size: 10px;
+      color: #999;
+      font-weight: normal;
+    }
+    
+    .page-info {
+      background: #f5f5f5;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+      font-size: 12px;
+      color: #333;
+      word-break: break-word;
+    }
+    
+    .page-info .label {
+      display: block;
+      font-size: 10px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      background: #4285f4;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    
+    button .icon {
+      font-size: 14px;
+    }
+    
+    button:hover {
+      background: #3367d6;
+    }
+    
+    button:active {
+      background: #2851a3;
+    }
+    
+    .status {
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      margin-top: 10px;
+      display: none;
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
+    
+    .status.visible {
+      display: block;
+    }
+    
+    .status.progress {
+      display: block;
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+    
+    .status.success {
+      display: block;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    
+    .status.error {
+      display: block;
+      background: #ffebee;
+      color: #c62828;
+    }
+    
+    .status .time {
+      font-size: 10px;
+      color: #888;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h3>Page Saver <span class="version">v1.4.5</span></h3>
+  <div class="page-info">
+    <span class="label">Page Title</span>
+    <span id="currentPage">Loading...</span>
+  </div>
+  
+  <button id="saveScreenshot" title="Save current visible area as PNG image"><span class="icon">📷</span>Screenshot</button>
+  <button id="saveFullScreenshot" title="Scroll and capture entire page as one PNG image"><span class="icon">📜</span>Full Screenshot</button>
+  <button id="archiveSite" title="Download this page and linked pages as HTML files"><span class="icon">📁</span>Save Pages</button>
+  <button id="saveImages" title="Download all images from current page"><span class="icon">🖼️</span>Save Images</button>
+  
+  <div id="imageOptions" style="display: none; margin-top: 8px; padding: 8px; background: #f5f5f5; border-radius: 4px;">
+    <div style="margin-bottom: 8px;">
+      <label style="font-size: 11px; color: #666;">Min file size (skip small icons):</label>
+      <select id="minImageSize" style="margin-left: 8px; padding: 3px 6px; font-size: 11px; border: 1px solid #ddd; border-radius: 3px;">
+        <option value="0" selected>No limit</option>
+        <option value="5000">5 KB</option>
+        <option value="10000">10 KB</option>
+        <option value="20000">20 KB</option>
+        <option value="50000">50 KB</option>
+        <option value="100000">100 KB</option>
+      </select>
+    </div>
+    <div style="margin-bottom: 8px; font-size: 11px; color: #666;">Include:</div>
+    <div style="margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 8px;">
+      <label style="font-size: 11px; cursor: pointer;"><input type="checkbox" id="imgTag" checked style="margin-right: 3px;">img tags</label>
+      <label style="font-size: 11px; cursor: pointer;"><input type="checkbox" id="bgImages" style="margin-right: 3px;">CSS backgrounds</label>
+    </div>
+    <button id="startImageDownload" style="background: #2e7d32; font-size: 12px; padding: 6px 12px;">🚀 Start Download</button>
+    <button id="cancelImageDownload" style="background: #757575; font-size: 12px; padding: 6px 12px;">Cancel</button>
+  </div>
+
+  <div id="archiveOptions" style="display: none; margin-top: 8px; padding: 8px; background: #f5f5f5; border-radius: 4px;">
+    <div style="margin-bottom: 8px;">
+      <label style="font-size: 11px; color: #666;">URL Prefix (pages under this path):</label>
+      <input type="text" id="urlPrefix" style="width: 100%; margin-top: 4px; padding: 4px; font-size: 11px; border: 1px solid #ddd; border-radius: 3px; box-sizing: border-box;" />
+    </div>
+    <div style="margin-bottom: 8px;">
+      <label style="font-size: 11px; color: #666;">Max pages to archive:</label>
+      <input type="number" id="maxPages" value="500" min="1" max="500" style="width: 60px; margin-left: 8px; padding: 4px; font-size: 11px; border: 1px solid #ddd; border-radius: 3px;" />
+    </div>
+    <button id="startArchive" style="background: #2e7d32; font-size: 12px; padding: 6px 12px;">🚀 Start Archive</button>
+    <button id="cancelArchive" style="background: #757575; font-size: 12px; padding: 6px 12px;">Cancel</button>
+  </div>
+  
+  <div id="status" class="status"></div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
