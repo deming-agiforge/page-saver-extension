@@ -108,6 +108,27 @@ function getFilename(baseFilename, extension) {
   return `${baseFilename}.${extension}`;
 }
 
+// Area Screenshot - delegates to background service worker
+// (popup closes when user clicks on page, so background handles the capture)
+document.getElementById('saveAreaScreenshot').addEventListener('click', async () => {
+  try {
+    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+    
+    // Send message to background to handle the area capture
+    chrome.runtime.sendMessage({
+      action: 'startAreaCapture',
+      tabId: tab.id,
+      windowId: tab.windowId
+    });
+    
+    // Close popup - background will handle the rest
+    window.close();
+    
+  } catch (error) {
+    showFinalResult('Failed: ' + error.message, true);
+  }
+});
+
 // Capture visible area only (single screenshot)
 document.getElementById('saveScreenshot').addEventListener('click', async () => {
   showStatus('⏳ Capturing visible area...', 'progress');

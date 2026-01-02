@@ -4,7 +4,7 @@
 **Page Saver - Screenshot & Download**
 
 ## Short Description (132 characters max)
-Capture screenshots, full-page scrolling captures, batch download HTML pages, and extract all images from any website.
+Area, visible, or full-page screenshots, batch download HTML pages, and extract all images from any website.
 
 ## Detailed Description
 
@@ -12,12 +12,17 @@ Capture screenshots, full-page scrolling captures, batch download HTML pages, an
 
 ### ✨ Key Features
 
-**📷 Screenshot**
+**✂️ Area Screenshot**
+- Select any region on the page to capture
+- Perfect for capturing specific elements
+- Real-time dimension display while selecting
+
+**📷 Visible Screenshot**
 - Capture the visible area of any webpage instantly
 - Save as high-quality PNG image
 - Smart filename based on page title
 
-**📜 Full Page Screenshot**
+**📜 Full Screenshot**
 - Automatically scroll and capture the entire page
 - Intelligent stitching for seamless results
 - Handles fixed headers and sticky elements
@@ -66,6 +71,7 @@ English
 
 ## Tags/Keywords
 - screenshot
+- area screenshot
 - full page capture
 - web archive
 - image downloader
@@ -75,6 +81,7 @@ English
 - website downloader
 - offline reading
 - web clipper
+- region capture
 
 ---
 

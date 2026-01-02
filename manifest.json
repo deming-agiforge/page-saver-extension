@@ -1,14 +1,17 @@
 {
   "manifest_version": 3,
   "name": "Page Saver - Screenshot & Download",
-  "version": "1.4.5",
-  "description": "Capture screenshots, full-page scrolling captures, batch download HTML pages, and extract all images from any website.",
+  "version": "1.6.0",
+  "description": "Capture area, visible, or full-page screenshots, batch download HTML pages, and extract all images from any website.",
   "permissions": [
     "activeTab",
     "downloads",
     "scripting",
     "storage"
   ],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": {

@@ -2,16 +2,22 @@
 
 A powerful Chrome extension for saving web content - screenshots, full-page captures, HTML archives, and images.
 
-![Version](https://img.shields.io/badge/version-1.4.5-blue)
+![Version](https://img.shields.io/badge/version-1.6.0-blue)
 ![Manifest](https://img.shields.io/badge/manifest-v3-green)
 ![License](https://img.shields.io/badge/license-MIT-orange)
 
 ## Features
 
-### 📷 Screenshot
+### ✂️ Area Screenshot
+Select any rectangular area on the page to capture. Perfect for:
+- Capturing specific elements
+- Cropping out unwanted parts
+- Quick partial screenshots
+
+### 📷 Visible Screenshot
 Capture the visible area of any webpage instantly as a PNG image.
 
-### 📜 Full Page Screenshot
+### 📜 Full Screenshot
 Automatically scroll and stitch together a complete full-page capture. Handles:
 - Fixed/sticky headers
 - Custom scroll containers
@@ -47,7 +53,8 @@ Extract and download all images from a webpage:
 1. Navigate to any webpage
 2. Click the Page Saver icon in your toolbar
 3. Choose your action:
-   - **Screenshot** - Capture visible area
+   - **Area Screenshot** - Select and capture a region
+   - **Visible Screenshot** - Capture visible area
    - **Full Screenshot** - Capture entire page
    - **Save Pages** - Download HTML pages
    - **Save Images** - Download all images
@@ -59,6 +66,7 @@ universal-page-saver/
 ├── manifest.json        # Extension configuration
 ├── popup.html           # Popup UI
 ├── popup.js             # Main logic
+├── background.js        # Service worker for area screenshot
 ├── content.js           # Content script
 ├── icon-16.png          # Toolbar icon
 ├── icon-48.png          # Extension management icon
@@ -98,6 +106,16 @@ See [PRIVACY_POLICY.md](PRIVACY_POLICY.md) for details.
 3. Click the refresh button in `chrome://extensions/`
 
 ## Changelog
+
+### v1.6.0
+- Added Area Screenshot feature with drag-to-select
+- Uses background service worker for reliable capture
+- Shows selection dimensions in real-time
+- Press ESC to cancel selection
+
+### v1.5.x
+- Area Screenshot UI implementation
+- Debug and testing versions
 
 ### v1.4.5
 - Added multi-size icons for Chrome Web Store
